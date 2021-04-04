@@ -54,11 +54,11 @@ export default function Portfolio() {
         return(
             <div className={"container"}>
                 <div className={"row"}>
-                    <div className={"col-9"}>
+                    <div className="col-lg-9 col-md-9 col-sm-12">
                         <h1>Your Portfolio</h1>
                         <p>Accurately tracking the investment performance of your crypto assets.</p>
                     </div>
-                    <div className={"col-3"}>
+                    <div className={"col-lg-3 col-md-3 col-sm-12"}>
                         <Link
                             to="/createAsset"
                             className="btn btn-lg btn-primary"
@@ -71,38 +71,40 @@ export default function Portfolio() {
                 </div>
                 <br/>
                 <div className={"row"}>
-                    <div className={"col-4 border-dark"}>
+                    <div className={"col-lg-4 col-md-4 col-sm-12 border-dark"}>
                         <p>Current balance</p>
                         <h3>$ {totalBalance.toFixed(4)}</h3>
                     </div>
-                    <div className={"col-8"}>
+                    <div className={"col-lg-8 col-md-8 col-sm-12"}>
                         <p>Your Assets</p>
-                        <table className={"table"}>
-                            <thead>
-                            <tr>
-                                <th scope={"col"}>Name</th>
-                                <th scope={"col"}>Price</th>
-                                <th scope={"col"}>Quantity</th>
-                                <th scope={"col"}>Holdings</th>
-                                <th scope={"col"}>Profit/Loss</th>
-                                <th scope={"col"}>Actions</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            { userAssetsData.map((value, index) => {
-                                return (
-                                    <tr key={index}>
-                                        <th>{value.name}-{value.symbol}</th>
-                                        <th>{value.currentPrice.toFixed(2)}</th>
-                                        <th>{value.quantity}</th>
-                                        <th>{(value.quantity * value.currentPrice).toFixed(2)}</th>
-                                        <th>{((value.quantity* value.currentPrice) - (value.quantity* value.cost_price)).toFixed(2)}</th>
-                                        <th><button className="btn btn-danger" onClick={handleDelete} id={value.id}>Delete</button></th>
-                                    </tr>
-                                )
-                            }) }
-                            </tbody>
-                        </table>
+                        <div className="table-responsive">
+                            <table className={"table"}>
+                                <thead>
+                                <tr>
+                                    <th scope={"col"}>Name</th>
+                                    <th scope={"col"}>Price</th>
+                                    <th scope={"col"}>Quantity</th>
+                                    <th scope={"col"}>Holdings</th>
+                                    <th scope={"col"}>Profit/Loss</th>
+                                    <th scope={"col"}>Actions</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                { userAssetsData.map((value, index) => {
+                                    return (
+                                        <tr key={index}>
+                                            <th>{value.name}-{value.symbol}</th>
+                                            <th>{value.currentPrice.toFixed(2)}</th>
+                                            <th>{value.quantity}</th>
+                                            <th>{(value.quantity * value.currentPrice).toFixed(2)}</th>
+                                            <th>{((value.quantity* value.currentPrice) - (value.quantity* value.cost_price)).toFixed(2)}</th>
+                                            <th><button className="btn btn-danger" onClick={handleDelete} id={value.id}>Delete</button></th>
+                                        </tr>
+                                    )
+                                }) }
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>
