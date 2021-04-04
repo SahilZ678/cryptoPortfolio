@@ -6,21 +6,7 @@ import axios from "axios";
 function HomePage() {
     useEffect(() => {
         if (localStorage.getItem('currentCryptoValue') == null) {
-            axios({
-                method: "get",
-                url: "https://cors-anywhere.herokuapp.com/https://pro-api.coinmarketcap.com/v1/cryptocurrency/listings/latest?start=1&limit=100&so\n" +
-                    "rt_dir=desc&sort=market_cap&convert=USD&CMC_PRO_API_KEY=059e551f-93e4-48\n" +
-                    "58-801b-3782e9b82b9f",
-                headers: {
-                    'Content-Type': 'Application/json',
-                    'X-Requested-With': 'XMLHttpRequest',
-                    'Access-Control-Allow-Origin' : '*',
-                    'Access-Control-Allow-Methods' : 'GET',
-                    'Access-Control-Allow-Headers': 'Content-Type, Access-Control-Allow-Origin, Access-Control-Allow-Headers, Authorization, X-Requested-With'
-                }
-            }).then((res) => {
-                localStorage.setItem('currentCryptoValue', JSON.stringify(res));
-            });
+            getCryptoData();
         }
     }, []);
     const history = useHistory();
@@ -49,3 +35,21 @@ function HomePage() {
 }
 
 export default HomePage;
+
+export function getCryptoData() {
+    axios({
+        method: "get",
+        url: "https://cors-anywhere.herokuapp.com/https://pro-api.coinmarketcap.com/v1/cryptocurrency/listings/latest?start=1&limit=100&so\n" +
+            "rt_dir=desc&sort=market_cap&convert=USD&CMC_PRO_API_KEY=059e551f-93e4-48\n" +
+            "58-801b-3782e9b82b9f",
+        headers: {
+            'Content-Type': 'Application/json',
+            'X-Requested-With': 'XMLHttpRequest',
+            'Access-Control-Allow-Origin' : '*',
+            'Access-Control-Allow-Methods' : 'GET',
+            'Access-Control-Allow-Headers': 'Content-Type, Access-Control-Allow-Origin, Access-Control-Allow-Headers, Authorization, X-Requested-With'
+        }
+    }).then((res) => {
+        localStorage.setItem('currentCryptoValue', JSON.stringify(res));
+    });
+}

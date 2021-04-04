@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from "react";
 import axios from "axios";
 import { Link, useHistory } from "react-router-dom";
+import {getCryptoData} from "./Home";
 
 export default function Portfolio() {
     const history = useHistory();
@@ -9,24 +10,35 @@ export default function Portfolio() {
 
     useEffect(() => {
         let currentCryptoData = [];
-        if(localStorage.getItem('currentCryptoValue').length > 0) {
-            currentCryptoData = JSON.parse(localStorage.getItem('currentCryptoValue')).data.data;
+        if(localStorage.getItem('currentCryptoValue') != null) {
+            currentCryptoData = setRequiredData(currentCryptoData);
+        } else {
+            getCryptoData();
+            setTimeout(() => {
+                setRequiredData();
+            }, 100);
         }
 
-        axios.get('/api/v1/assets')
-            .then(res => {
-                let data = res.data;
-                let sum =  0;
-                let newData = [];
-                for(const el of data) {
-                    let currentData = currentCryptoData.filter(x => x.name == el.name)[0];
-                    newData.push({...el, currentPrice: currentData.quote.USD.price});
-                    sum += (el.quantity) * (currentData.quote.USD.price);
-                }
-                setUserAssetsData(newData);
-                setTotalBalance(sum);
-            });
+        setTimeout(() => {
+            axios.get('/api/v1/assets')
+                .then(res => {
+                    let data = res.data;
+                    let sum =  0;
+                    let newData = [];
+                    for(const el of data) {
+                        let currentData = currentCryptoData.filter(x => x.name == el.name)[0];
+                        newData.push({...el, currentPrice: currentData.quote.USD.price});
+                        sum += (el.quantity) * (currentData.quote.USD.price);
+                    }
+                    setUserAssetsData(newData);
+                    setTotalBalance(sum);
+                });
+        }, 150);
     }, []);
+
+    const setRequiredData = (currentCryptoData) => {
+        return JSON.parse(localStorage.getItem('currentCryptoValue')).data.data;
+    }
 
     const handleDelete = (e) => {
         let assetId = e.target.id;

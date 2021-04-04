@@ -4,6 +4,7 @@ import DatePicker from "react-datepicker";
 import axios from "axios";
 import Select from 'react-select'
 import "react-datepicker/dist/react-datepicker.css";
+import {getCryptoData} from "./Home";
 
 const initialValues = {
     name: "",
@@ -20,15 +21,24 @@ export default function CreateAsset() {
     const [formValues, setFormValues] = useState(initialValues);
 
     useEffect(() => {
-        if(localStorage.getItem('currentCryptoValue').length > 0) {
-            let data = JSON.parse(localStorage.getItem('currentCryptoValue')).data.data;
-            let dataForSelect = [];
-            data.map(d => {
-                dataForSelect.push({value: d.symbol, label: d.name})
-            })
-            setSelectData(dataForSelect);
+        if(localStorage.getItem('currentCryptoValue') != null) {
+            setRequiredData();
+        } else {
+            getCryptoData();
+            setTimeout(() => {
+                setRequiredData();
+            }, 50);
         }
     }, []);
+
+    const setRequiredData = () => {
+        let data = JSON.parse(localStorage.getItem('currentCryptoValue')).data.data;
+        let dataForSelect = [];
+        data.map(d => {
+            dataForSelect.push({value: d.symbol, label: d.name})
+        })
+        setSelectData(dataForSelect);
+    }
 
     const handleFormSubmit = (event) => {
         event.preventDefault();
