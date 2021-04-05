@@ -39,9 +39,7 @@ export default HomePage;
 export function getCryptoData() {
     axios({
         method: "get",
-        url: "https://pro-api.coinmarketcap.com/v1/cryptocurrency/listings/latest?start=1&limit=100&so\n" +
-            "rt_dir=desc&sort=market_cap&convert=USD&CMC_PRO_API_KEY=059e551f-93e4-48\n" +
-            "58-801b-3782e9b82b9f",
+        url: "/api/v1/get_crypto_data",
         headers: {
             'Content-Type': 'Application/json',
             'X-Requested-With': 'XMLHttpRequest',
