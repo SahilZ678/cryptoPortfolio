@@ -39,7 +39,7 @@ export default HomePage;
 export function getCryptoData() {
     axios({
         method: "get",
-        url: "https://cors-anywhere.herokuapp.com/https://pro-api.coinmarketcap.com/v1/cryptocurrency/listings/latest?start=1&limit=100&so\n" +
+        url: "https://pro-api.coinmarketcap.com/v1/cryptocurrency/listings/latest?start=1&limit=100&so\n" +
             "rt_dir=desc&sort=market_cap&convert=USD&CMC_PRO_API_KEY=059e551f-93e4-48\n" +
             "58-801b-3782e9b82b9f",
         headers: {
